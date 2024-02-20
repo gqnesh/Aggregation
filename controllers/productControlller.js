@@ -124,6 +124,41 @@ class ProductController {
     })
 
   }
+
+  static pagination = async (req, res) => {
+    const { price, name, company, sort } = req.query;
+    let queryObject = {}
+    let DBQuery = ProductModel.find(queryObject);
+
+    let page = req.query.page || 1;
+    let limitForData = req.query.limit || 3;
+    let skip = (page - 1) * limitForData;
+
+    if (price) {
+      queryObject.price = price;
+    }
+    // if (name) {
+    //   queryObject.name = name;
+    // }
+    // if (company) {
+    //   queryObject.company = company;
+    // }
+    if (sort) {
+      let sortFix = sort.split(',').join(" ");
+      DBQuery = ProductModel.find().sort(sortFix)
+    }
+
+    const getData = await DBQuery.skip(skip).limit(limitForData);
+
+    res.status(200).send({
+      success: true,
+      getData,
+      key: sort,
+      totalData: getData.length
+    })
+
+  }
+
 }
 
 module.exports = ProductController;
