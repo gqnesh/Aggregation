@@ -137,12 +137,12 @@ class ProductController {
     if (price) {
       queryObject.price = price;
     }
-    // if (name) {
-    //   queryObject.name = name;
-    // }
-    // if (company) {
-    //   queryObject.company = company;
-    // }
+    if (name) {
+      queryObject.name = name;
+    }
+    if (company) {
+      queryObject.company = company;
+    }
     if (sort) {
       let sortFix = sort.split(',').join(" ");
       DBQuery = ProductModel.find().sort(sortFix)
