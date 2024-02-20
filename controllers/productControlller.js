@@ -143,6 +143,9 @@ class ProductController {
     if (company) {
       queryObject.company = company;
     }
+
+    DBQuery = ProductModel.find(queryObject);
+    
     if (sort) {
       let sortFix = sort.split(',').join(" ");
       DBQuery = ProductModel.find().sort(sortFix)
